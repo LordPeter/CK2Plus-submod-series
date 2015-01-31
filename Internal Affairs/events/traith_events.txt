@@ -1,0 +1,526 @@
+namespace = traith
+
+#You see what looks to be a stag right infront of you
+character_event = {
+	id = traith.001
+	desc = "traith001"
+	picture = "GFX_evt_hunt"
+		is_triggered_only = yes 
+		
+	option = {
+	name = "EVTOPTAtraith1"
+		random_list = {
+				50 = { character_event = { id = traith.003 days = 3 } }
+				20 = { character_event = { id = traith.005 days = 3 } }
+				20 = { character_event = { id = traith.0011 days = 3 } }
+		
+		}
+		
+	
+	
+	}
+}
+#Set off on a hunt
+character_event = {
+	id = traith.401
+	desc = "traith041"
+	picture = "GFX_evt_hunt"
+	is_triggered_only = yes 
+		
+	option = {
+	name = "EVTOPTAtraith041"
+		add_character_modifier = { name = holding_trait_hunt duration = 60 }
+		}
+}
+
+#traith0011;You miss, slip, and fall…
+character_event = {
+	id = traith.0011
+	desc = "traith0011"
+	picture = "GFX_evt_hunt"
+		is_triggered_only = yes 
+	option = {
+	name = "EVTOPTAtraith11"
+		random_list = {
+				20 = { character_event = { id = traith003 days = 3 } }
+				50 = {death = { death_reason = death_accident }}
+				50 = {
+					add_trait = wounded
+					health = -1
+					clr_character_flag = holding_recent_trait_hunt
+					clr_character_flag = found_stag_hunt
+					set_character_flag = held_recent_trait_hunt
+					remove_character_modifier = holding_trait_hunt
+					hidden_tooltip = { character_event = { id = 38280 days = 3 } }
+				}
+				25 = {
+					add_trait = maimed
+					health = -1.5
+					clr_character_flag = holding_recent_trait_hunt
+					clr_character_flag = found_stag_hunt
+					set_character_flag = held_recent_trait_hunt
+					remove_character_modifier = holding_trait_hunt
+					hidden_tooltip = { character_event = { id = 38281 days = 3 } }
+				}
+		
+		}
+		
+
+	
+	}
+}
+
+#traith005;You slice deep into the side of a large stag
+character_event = {
+	id = traith.005
+	desc = "traith005"
+	picture = "GFX_evt_hunt"
+		is_triggered_only = yes 
+		immediate = { clr_character_flag = stag_event }
+	option = {
+	name = "EVTOPTAtraith5"
+		
+		random_list = {
+				10 = {
+					add_trait = maimed
+					health = -1.5					
+					clr_character_flag = holding_recent_trait_hunt
+					clr_character_flag = found_stag_hunt
+					set_character_flag = held_recent_trait_hunt
+					remove_character_modifier = holding_trait_hunt
+					hidden_tooltip = { character_event = { id = 38281 days = 3 } }
+				}
+				45 = { character_event = { id = traith.008 days = 3 } }
+				45 = { character_event = { id = traith.010 days = 3 } }
+				15 = {
+					add_trait = wounded 
+					health = -1
+					clr_character_flag = holding_recent_trait_hunt
+					clr_character_flag = found_stag_hunt
+					set_character_flag = held_recent_trait_hunt
+					remove_character_modifier = holding_trait_hunt
+					hidden_tooltip = { character_event = { id = 38280 days = 3 } }
+				}
+		}
+		}
+	option = {
+	name = "EVTOPTBtraith5"
+		random_list = {
+				5 = {
+					add_trait = maimed
+					health = -1.5
+					clr_character_flag = holding_recent_trait_hunt
+					clr_character_flag = found_stag_hunt
+					set_character_flag = held_recent_trait_hunt
+					remove_character_modifier = holding_trait_hunt
+					hidden_tooltip = { character_event = { id = 38281 days = 3 } }
+				}
+				50 = { character_event = { id = traith.008 days = 3 } }
+				20 = { character_event = { id = traith.010 days = 3 } }
+				10 = {
+					add_trait = wounded
+					health = -1					
+					clr_character_flag = holding_recent_trait_hunt
+					clr_character_flag = found_stag_hunt
+					set_character_flag = held_recent_trait_hunt
+					remove_character_modifier = holding_trait_hunt
+					hidden_tooltip = { character_event = { id = 38280 days = 3 } }
+				}
+		
+		}
+		
+	
+	}
+	}
+
+
+#You spear the stag in the side, but after a moment you realize its but a fawn!;;;;
+character_event = {
+	id = traith.008
+	desc = "traith008"
+	picture = "GFX_evt_hunt"
+		is_triggered_only = yes 
+	option = {
+	name = "EVTOPTAtraith8"
+		prestige = 50
+		scaled_wealth = 0.8
+		}
+		
+	
+	
+}
+
+
+#You peer through the dense forest, and spot, what looks to be, a large stag		
+ character_event = {
+	id = traith.941
+	desc = "traith945"
+	picture = "GFX_evt_hunt"
+	
+		trigger = {
+		age = 16
+		is_ruler = yes
+		has_character_flag = holding_recent_trait_hunt
+		has_character_flag = found_stag_hunt
+		not = { has_character_flag = stag_event }
+		or = {
+					trait = brave
+					trait = strong
+						}
+		
+		}
+		immediate = { set_character_flag = stag_event  }	
+		mean_time_to_happen = { 
+		days = 2 
+		
+		modifier = {
+			factor = 1
+			has_character_flag = found_stag_hunt
+			}
+		}
+		
+	option = {
+	name ="EVTOPTBtraith945"
+	
+	
+	hidden_tooltip = {
+					random_list = {
+						5 = { 
+							character_event = { id = traith.010 days = 3 } }
+						2 = { 
+							character_event = { id = traith.002 days = 3 } 
+						}
+						#10 = { 
+						#	character_event = { id = traith.009 } 
+						#}
+						70 = { 
+							 character_event = { id = traith.005 days = 3 } 
+						}
+						10 = { 
+							character_event = { id = traith.001 days = 3 } 
+						}
+					}
+					}
+	}	
+}
+
+#You peer through the dense forest, and spot, what looks to be, a large stag (STANDARD)	
+ character_event = {
+	id = traith.942
+	desc = "traith945"
+	picture = "GFX_evt_hunt"
+		
+		trigger = {
+		age = 16
+		is_ruler = yes
+		has_character_flag = holding_recent_trait_hunt
+		has_character_flag = found_stag_hunt
+		not = { has_character_flag = stag_event }
+		not = { trait = genius }
+		not = { trait = quick }
+		not = { trait = brave }
+		not = { trait = strong }
+		
+		}
+		
+		mean_time_to_happen = { 
+		days = 2 
+			}
+	immediate = { set_character_flag = stag_event  }
+	option = {
+	name ="EVTOPTAtraith945"
+	
+	random_list = {
+						5 = { 
+							character_event = { id = traith.010 days = 3 } 
+						}
+						#10 = { 
+							#character_event = { id = traith.009 } 
+						#}
+						70 = { 
+							character_event = { id = traith.005 days = 3 } 
+						}
+						10 = { 
+							character_event = { id = traith.001 days = 3 } 
+						}
+						5 = { 
+							character_event = { id = traith.002 days = 3 } 
+					}
+	}	
+	}
+}
+#You peer through the dense forest, and spot, what looks to be, a large stag (SMART)	
+character_event = {
+	id = traith.943
+	desc = "traith945"
+	picture = "GFX_evt_hunt"
+		
+		trigger = {
+			age = 16
+			is_ruler = yes
+			has_character_flag = holding_recent_trait_hunt
+			has_character_flag = found_stag_hunt
+			not = { has_character_flag = stag_event }
+				or = { 
+					trait = genius
+					trait = quick
+					}
+		}
+		immediate = { set_character_flag = stag_event  }
+		mean_time_to_happen = { 
+		days = 2 
+		
+		modifier = {
+			factor = 1
+			has_character_flag = found_stag_hunt
+			}
+			}
+		option = {
+		name ="EVTOPTAtraith945"
+		
+		hidden_tooltip = {
+					random_list = {
+						10 = { 
+							character_event = { id = traith.010 days = 3 } 
+						}
+						#20 = { 
+						#	character_event = { id = traith.009 } 
+						#}
+						70 = { 
+							character_event = { id = traith.005 days = 3 } 
+						}
+						2 = { 
+							character_event = { id = traith.001 } 
+						}
+					}
+					}
+	}	
+}
+ 
+ #traith003;You throw yourself at the beast, and it nimbly runs away.
+ character_event = {
+	id = traith.003
+	desc = "traith003"
+	picture = "GFX_evt_hunt"
+		is_triggered_only = yes 
+	option = {
+	name = "EVTOPTAtraith3"
+		prestige = -50
+		
+		}
+		
+	}
+	
+ #Clear Flag
+ character_event = {
+	id = traith.845
+	desc = "traith845"
+	picture = "GFX_evt_hunt"
+	hide_window = yes
+		trigger = {
+		age = 16
+		is_ruler = yes
+		had_character_flag = { flag = held_recent_trait_hunt days = 180 }
+		}
+	option = {
+	clr_character_flag = held_recent_trait_hunt 
+	set_character_flag = okay_to_hunt
+	}	
+	}
+ 
+ #You spear the stag in the side. Glory overtakes you!
+ character_event = {
+	id = traith.010
+	desc = "traith010"
+	picture = "GFX_evt_hunt"
+		is_triggered_only = yes
+		immediate = { clr_character_flag = stag_event }
+	option = {
+		trigger = { is_married = yes }
+		name = "EVTOPTAtraith10"
+		prestige = 100
+		health = 1
+		scaled_wealth = 0.5
+		spouse = {
+				opinion = {
+				modifier = opinion_delighted
+				who = root
+				years = 1
+			}
+			}
+		}
+		option = {
+		trigger = { liege = { NOT = { war_with = ROOT } }}
+		name = "EVTOPTBtraith10"
+		prestige = 100
+		health = 1
+		scaled_wealth = 0.9
+		
+		liege = { 
+				opinion = {
+				modifier = opinion_delighted
+				who = root
+				years = 1
+			}
+			}
+		}
+		option = {
+		trigger = { trait = arbitrary }
+		name = "EVTOPTCtraith10"
+		prestige = 200
+		health = 1
+		scaled_wealth = 0.5
+		}
+		option = {
+		name = "EVTOPTCtraith10"
+		prestige = 150
+		health = 1
+		scaled_wealth = 0.5
+		}
+		option = {
+		trigger = { has_lover = yes }
+		name = "EVTOPTAtraith10"
+		prestige = 100
+		health = .5
+		scaled_wealth = 0.1
+		lover = {
+		opinion = {
+				modifier = opinion_delighted
+				who = root
+				years = 1
+			}
+		}
+		}
+}
+
+#You lunge at the stag…Wait. That's not a stag!
+ character_event = {
+	id = traith.002
+	desc = "traith002"
+	picture = "GFX_evt_hunt"
+		is_triggered_only = yes 
+	immediate = { clr_character_flag = stag_event }
+	option = {
+		name = "EVTOPTAtraith002"
+		prestige = -100
+		random_vassal = {
+			add_trait = maimed
+			health = -1.5
+		}
+	}
+}
+
+#Courtier steals kill
+ 
+
+
+
+	
+character_event = {
+	id = traith.072
+	desc = "traith072"
+	picture = "GFX_evt_hunt"
+	trigger = {
+	age = 16
+	is_ruler = yes
+	trait = hunter
+	had_character_flag = { flag = holding_recent_trait_hunt days = 7 }
+	}
+	mean_time_to_happen = {
+		days = 15
+		
+		
+		modifier = {
+			factor = 1.5
+			has_character_flag = holding_recent_trait_hunt
+		}
+		modifier = {
+			factor = 5
+			has_character_flag = found_stag_hunt
+		}			
+		modifier = {
+			factor = 0.75
+			trait = brave
+		}
+		modifier = {
+			factor = 0.9
+			trait = ambitious
+		}
+		modifier = {
+			factor = .5
+			trait = genius
+		}
+		modifier = {
+			factor = .75
+			trait = quick
+		}
+		modifier = {
+			factor = 1.5
+			not = { martial = 10 }
+		}
+		modifier = {
+			factor = 3.5
+			trait = imbecile
+		}
+		modifier = {
+			factor = 2.5
+			trait = slow
+		}
+		modifier = {
+			factor = 2.5
+			trait = slothful
+		}
+		}
+	option = {
+		name = "EVTOPTAtraith079"
+		set_character_flag = found_stag_hunt
+		}
+		
+	
+	}
+	
+#FAILURE	
+character_event = {
+	id = traith.071
+	desc = "traith071"
+	picture = "GFX_evt_hunt"
+	trigger = {
+	age = 16
+	is_ruler = yes
+	trait = hunter
+	had_character_flag = { flag = holding_recent_trait_hunt days = 60 }
+	not = { has_character_flag = found_stag_hunt}
+	}
+	option = {
+	name = "EVTOPTAtraith071"
+	clr_character_flag = holding_recent_trait_hunt
+	set_character_flag = held_recent_trait_hunt
+	remove_character_modifier = holding_trait_hunt
+	prestige = -50
+	}
+	}
+	
+#SUCCESS
+character_event = {
+	id = traith.073
+	desc = "traith073"
+	picture = "GFX_evt_hunt"
+	trigger = {
+	age = 16
+	is_ruler = yes
+	trait = hunter
+	had_character_flag = { flag = holding_recent_trait_hunt days = 60 }
+	has_character_flag = found_stag_hunt
+	}
+	option = {
+	name = "EVTOPTAtraith073"
+	clr_character_flag = holding_recent_trait_hunt
+	clr_character_flag = found_stag_hunt
+	set_character_flag = held_recent_trait_hunt
+	remove_character_modifier = holding_trait_hunt
+	clr_character_flag = stag_event
+	}
+}
+
+
+	

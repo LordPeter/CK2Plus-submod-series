@@ -1,0 +1,32 @@
+holding_trait_hunt = {
+	monthly_character_prestige = 0.05
+	icon = 7
+}
+
+bird1 = {
+	monthly_character_prestige = 0.05
+	icon = 7
+}
+
+bird2 = {
+	monthly_character_prestige = 0.1
+	icon = 10
+}
+
+bird3 = {
+	monthly_character_prestige = 0.5
+	icon = 25
+}
+
+bird4 = {
+	monthly_character_prestige = 1.0
+	icon = 28
+}
+bird5 = {
+	monthly_character_prestige = 2.0
+	icon = 28
+}
+
+liege_said_no_timer = {
+	icon = 1
+}

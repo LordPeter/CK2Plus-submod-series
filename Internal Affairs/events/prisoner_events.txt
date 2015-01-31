@@ -1,0 +1,204 @@
+namespace = pris
+
+character_event = {
+	id = pris.001
+	desc = "pris001"
+	picture = "GFX_evt_Whispering_in_ear"
+		is_triggered_only = yes 
+	option = {
+	name = "EVTOPTApris001"
+		random_list = {
+				75 = {}
+				20 = { character_event = { id = pris.004 } }
+				5 = { character_event = { id = pris.005 } }
+		
+		}
+	}
+	
+	
+}
+#
+character_event = {
+	id = pris.9002
+	name = "pris.9002"
+	desc = "pris9002"
+	picture = "GFX_evt_Whispering_in_ear"
+		is_triggered_only = yes 
+	option = {
+		name = "EVTOPTApris9002"
+		add_trait = dyn_dishonorable4
+	}
+}
+#
+character_event = {
+	id = pris.003
+	desc = "pris003"
+	picture = "GFX_evt_Whispering_in_ear"
+		is_triggered_only = yes 
+					option = {
+					name = "EVTOPTApris003"
+						trigger = {
+							NOT = { trait = lustful }
+							NOT = { trait = cruel }
+						 }
+					
+					random_list = {
+						25 = {
+						add_trait = cruel
+						piety = -50
+						character_event = { id = 38259 }
+						}
+						25 = { 
+						add_trait = lustful
+						piety = -50
+						character_event = { id = 38272 }
+						}
+						50 = {
+						hidden_tooltip = { character_event = { id = pris.009 } }
+						piety = -50
+						}
+					}
+				}
+				option = {
+				name = "EVTOPTApris003"
+					trigger = {
+						NOT = { trait = cruel }
+						trait = lustful
+					}
+					random_list = {
+						50 = {
+							add_trait = cruel
+							piety = -50
+							character_event = { id = 38259 }
+						}
+						50 = {
+							hidden_tooltip = { character_event = { id = pris.009 } }
+							piety = -50
+						}
+					}
+				}
+		
+				option = {
+				name = "EVTOPTApris003"
+					trigger = {
+						NOT = { trait = lustful }
+						trait = cruel
+					}
+					random_list = {
+						50 = {
+							add_trait = lustful
+							piety = -50
+							character_event = { id = 38272 }
+						}
+						50 = {
+							hidden_tooltip = { character_event = { id = pris.009 } }
+							piety = -50
+						}
+					}
+				}
+				option = {
+				name = "EVTOPTApris003"
+					trigger = {
+					
+					AND = { trait = cruel 
+							trait = lustful
+						  }
+					}
+					random_list = {
+						50 = {
+							piety = -100
+						}
+						50 = {
+							hidden_tooltip = { character_event = { id = pris.009 } }
+							piety = -50
+						}
+						}
+				}
+				
+					
+		}
+
+#
+character_event = {
+	id = pris.004
+	desc = "pris004"
+	picture = "GFX_evt_Sick_character"
+		is_triggered_only = yes 
+		option = {
+		name = "EVTOPTApris004"
+		add_trait = wounded
+	}
+}
+#
+character_event = {
+	id = pris.005
+	desc = "pris005"
+	picture = "GFX_evt_Sick_character"
+	is_triggered_only = yes 
+	option = {
+		name = "EVTOPTApris005"
+		add_trait = maimed
+	}
+ }
+ 
+character_event = {
+	id = pris.006
+	hide_window = yes
+	desc = "pris006"
+	picture = "GFX_evt_Whispering_in_ear"
+	is_triggered_only = yes 
+	immediate = {
+		set_character_flag = pris_assaulted
+		# STD transmission
+		if = {
+			limit = { has_character_modifier = minor_disease_herpes }
+			FROM = { character_event = { id = WoL.40 days = 5 random = 10 } }
+		}
+		if = {
+			limit = { FROM = { has_character_modifier = minor_disease_herpes } }
+			character_event = { id = WoL.40 days = 5 random = 10 }
+			}
+		}
+		
+	option = {
+		name = "EVTOPTApris006"
+		}
+		
+}
+
+character_event = {
+	id = pris.007
+	desc = "pris007"
+	hide_window = yes
+	picture = "GFX_evt_Whispering_in_ear"
+	trigger = {
+			has_character_flag = pris_assaulted
+		}
+		mean_time_to_happen = {
+			days = 60
+		}
+	option = {
+		name = "EVTOPTApris006"
+		clr_character_flag = pris_assaulted
+		}
+		
+}
+
+character_event = {
+	id = pris.009
+	desc = "pris009"
+	hide_window = yes
+	picture = "GFX_evt_Whispering_in_ear"
+		is_triggered_only = yes 
+		option = {
+			name = "EVTOPTApris009"
+			hidden_tooltip = {
+				random_list = {
+					20 = { character_event = { id = pris.001 } }
+					20 = { character_event = { id = pris.9002 } }
+					60 = {}
+					}
+				}
+			}
+}
+ 

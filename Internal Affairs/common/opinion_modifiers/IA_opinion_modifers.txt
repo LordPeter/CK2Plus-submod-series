@@ -1,0 +1,25 @@
+opinion_assaulted = 
+{
+
+	opinion = -100
+	
+	months = 12
+}
+
+opinion_assaulted_relative = 
+{
+
+	opinion = -50	
+	months = 6
+
+}
+
+opinion_forced_marriage = {
+	opinion = -150
+	months = 12
+}
+
+opinion_refused_to_lead = {
+	opinion = -30
+	months = 12
+}

@@ -1,0 +1,39 @@
+targetted_decisions = {
+
+	no_lead_decision = {
+	filter = realm
+	ai_target_filter = realm
+	
+	from_potential = {
+			has_character_flag = does_not_want_to_lead 
+			not = { has_character_flag = no_lead_asked_liege }
+		}
+	
+	potential = {
+			is_liege_of = FROM
+			
+		}
+		
+	ai_will_do = {
+		factor = 1
+		}
+	allow = {
+			war = yes 
+			from = {
+			in_command = yes
+			hidden_tooltip = { has_character_flag = does_not_want_to_lead }
+			prestige = 100
+			}
+			custom_tooltip = { text = EVTTOOLTIP_NO_LEAD 
+			not = {
+				has_character_modifier = liege_said_no_timer
+				}
+			}
+			
+		}
+	effect = {
+			FROM = { character_event = { id = no_lead.100 days = 5 } }
+			prestige = -100
+			}
+	}
+}

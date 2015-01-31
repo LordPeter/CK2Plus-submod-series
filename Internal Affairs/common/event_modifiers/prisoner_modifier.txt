@@ -1,0 +1,3 @@
+prisoner_assaulted = {
+	icon = 1
+}

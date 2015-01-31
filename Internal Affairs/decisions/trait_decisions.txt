@@ -1,0 +1,321 @@
+decisions = {
+
+# Shows up for every courtier/vassal, the ruler is in the from scope
+
+	trait_hunt = {
+		is_high_prio = yes
+		potential = {
+			is_ruler = yes
+			in_command = no
+			prisoner = no
+			trait = hunter
+			war = no
+			is_abroad	 = no
+			has_regent = no
+			is_adult = yes
+			NOT = { health_traits = 1 }
+			NOT = { any_demesne_title = { is_occupied = yes } }
+			
+			NOT = { has_character_flag = held_recent_trait_hunt }
+			#NOT = { has_character_flag = held_recent_hunt }
+			NOT = { has_character_flag = holding_recent_trait_hunt }
+			or = {
+				NOT = { has_character_flag = holding_recent_trait_hunt }
+				has_character_flag = okay_to_hunt
+				}
+			}
+		
+		allow = {
+				treasury = 50
+				trait = hunter
+				NOT = { trait = incapable }
+				NOT = { trait = maimed }
+				NOT = { trait = ill }
+				NOT = { trait = blinded }
+			}
+		effect = {
+			treasury = -50
+			#character_event = { id = traith.945 } 
+			set_character_flag = holding_recent_trait_hunt
+			clr_character_flag = okay_to_hunt
+			#root = has_character_flag = holding_recent_trait_hunt
+			character_event = { id = traith.401 }
+			
+			}
+			ai_will_do = {
+			factor = 1
+			modifier = {
+				factor = 0.1
+				always = yes
+			}
+			modifier = {
+				factor = 0
+				OR = {
+					trait = craven
+					trait = slothful
+					
+				}
+			}
+			modifier = {
+				factor = 0
+				NOT = { treasury = 200 }
+			}
+		}
+
+	}
+#FalconryPurchase
+	trait_falconry = {
+		is_high_prio = yes
+		potential = {
+			is_ruler = yes
+			in_command = no
+			prisoner = no
+			trait = falconer
+			war = no
+			is_abroad	 = no
+			has_regent = no
+			is_adult = yes
+			NOT = { health_traits = 1 }
+			NOT = { any_demesne_title = { is_occupied = yes } }
+			NOT = { has_character_flag = shopping_for_falcon }
+			NOT = { has_character_modifier = bird1 }
+			NOT = { has_character_modifier = bird2 }
+			NOT = { has_character_modifier = bird3 }
+			NOT = { has_character_modifier = bird4 }
+		}
+		
+		allow = {
+				treasury = 50
+				trait = falconer
+				NOT = { trait = incapable }
+				NOT = { trait = maimed }
+				NOT = { trait = ill }
+				NOT = { trait = blinded }
+			}
+		effect = {
+			
+			character_event = { id = traitf.101 }
+			
+			}
+			ai_will_do = {
+			factor = 1
+			modifier = {
+				factor = 0.1
+				always = yes
+			}
+			modifier = {
+				factor = 0
+				OR = {
+					trait = craven
+					trait = slothful
+					
+				}
+			}
+			modifier = {
+				factor = 0
+				NOT = { treasury = 200 }
+			}
+		}
+
+	}
+#TrainFalcon
+trait_train_falconry = {
+		is_high_prio = yes
+		potential = {
+			is_ruler = yes
+			in_command = no
+			prisoner = no
+			trait = falconer
+			war = no
+			is_abroad	 = no
+			has_regent = no
+			is_adult = yes
+			NOT = { health_traits = 1 }
+			NOT = { any_demesne_title = { is_occupied = yes } }
+			NOT = { has_character_flag = shopping_for_falcon }
+			NOT = { has_character_flag = training_falcon }
+			not = { has_character_flag = done_training_falcon}
+			or = {
+				has_character_modifier = bird1 
+				has_character_modifier = bird2 
+				has_character_modifier = bird3 
+				has_character_modifier = bird4
+				}
+		}
+		
+		allow = {
+				treasury = 50
+				trait = falconer
+				NOT = { trait = incapable }
+				NOT = { trait = maimed }
+				NOT = { trait = ill }
+				NOT = { trait = blinded }
+			}
+		effect = {
+			
+			character_event = { id = traitf.201 days = 3 }
+			set_character_flag = training_falcon
+			clr_character_flag = done_training_falcon
+			
+			}
+			ai_will_do = {
+			factor = 1
+			modifier = {
+				factor = 0.1
+				always = yes
+			}
+			modifier = {
+				factor = 0
+				OR = {
+					trait = craven
+					trait = slothful
+					
+				}
+			}
+			modifier = {
+				factor = 0
+				NOT = { treasury = 100 }
+			}
+		}
+
+	}
+#HuntWithFalcon
+trait_hunt_falconry = {
+		is_high_prio = yes
+		potential = {
+			is_ruler = yes
+			in_command = no
+			prisoner = no
+			trait = falconer
+			war = no
+			is_abroad	 = no
+			has_regent = no
+			is_adult = yes
+			NOT = { health_traits = 1 }
+			NOT = { any_demesne_title = { is_occupied = yes } }
+			NOT = { has_character_flag = shopping_for_falcon }
+			NOT = { has_character_flag = training_falcon }
+			NOT = { has_character_flag = hunting_falcon }
+			not = { has_character_flag = done_training_falcon}
+			not = { has_character_flag = done_hunting_falcon}
+			or = {
+				has_character_modifier = bird1 
+				has_character_modifier = bird2 
+				has_character_modifier = bird3 
+				has_character_modifier = bird4
+				has_character_modifier = bird5
+				}
+		}
+		
+		allow = {
+				treasury = 50
+				trait = falconer
+				NOT = { trait = incapable }
+				NOT = { trait = maimed }
+				NOT = { trait = ill }
+				NOT = { trait = blinded }
+			}
+		effect = {
+			treasury = -50
+			character_event = { id = traitf.501 days = 3 }
+			set_character_flag = hunting_falcon
+			clr_character_flag = done_hunting_falcon
+			
+			}
+			ai_will_do = {
+			factor = 1
+			modifier = {
+				factor = 0.1
+				always = yes
+			}
+			modifier = {
+				factor = 0
+				OR = {
+					trait = craven
+					trait = slothful
+					
+				}
+			}
+			modifier = {
+				factor = 0
+				NOT = { treasury = 100 }
+			}
+		}
+
+	}
+	
+# trait_duel = {
+#		is_high_prio = yes
+#		potential = {
+#			is_ruler = yes
+#			in_command = no
+#			prisoner = no
+#			trait = duelist
+#			war = no
+#			is_abroad	 = no
+#			has_regent = no
+#			is_adult = yes
+#			NOT = { health_traits = 1 }
+#			NOT = { any_demesne_title = { is_occupied = yes } }
+#			
+#		}
+#		
+#		allow = {
+#				treasury = 50
+#				trait = duelist
+#				NOT = { trait = incapable }
+#				NOT = { trait = maimed }
+#				NOT = { trait = ill }
+#				NOT = { trait = blinded }
+#				NOT = { has_character_flag = trait_dueling }
+#				NOT = { has_character_flag = failed_to_find_duel }
+#				or = {
+#				trait = poor_warrior
+#				trait = trained_warrior
+#				trait = skilled_warrior
+#				trait = master_warrior
+#				trait = bodyguard
+#				}
+#			}
+#		effect = {
+#			
+#			character_event = { id = traitduel.501 days = 3 }
+#			set_character_flag = trait_dueling
+#			
+#			
+#			}
+#			
+#			ai_will_do = {
+#			factor = 1
+#			modifier = {
+#				factor = 0.1
+#				always = yes
+#			}
+#			modifier = {
+#				factor = 0
+#				OR = {
+#					trait = craven
+#					trait = slothful
+#					
+#				}
+#			}
+#			modifier = {
+#				factor = 0
+#				NOT = { treasury = 100 }
+#			}
+#			modifier = {
+#			factor = 0
+#			is_ruler = yes
+#			current_heir = {
+#				is_child_of = ROOT
+#				dynasty = ROOT
+#				}
+#			}
+#			modifier = {
+#			factor = .5
+#			is_primary_heir = yes
+#			}
+#		}
+#
+#		}
+}

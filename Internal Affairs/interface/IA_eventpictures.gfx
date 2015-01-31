@@ -1,0 +1,9 @@
+spriteTypes = 
+{
+	spriteType = {
+		name = "GFX_evt_falconer"
+		texturefile = "gfx\\event_pictures\falconer.dds"
+		allwaystransparent = yes
+	}
+}
+	

@@ -1,0 +1,23 @@
+#CODE;ENGLISH;FRENCH;GERMAN;;SPANISH;;;;;;;;;x        
+seduce_prisoner; Visit  [Root.GetTitledFirstName] in chains; Visit [Root.GetTitledFirstName] in chains; Visit [Root.GetTitledFirstName] in chains; Visit [Root.GetTitledFirstName] in chains;    
+seduce_prisoner_desc; Visit [Root.GetTitledFirstName] in chains; Visit [Root.GetTitledFirstName] in chains; Visit [Root.GetTitledFirstName] in chains; Visit [Root.GetTitledFirstName] in chains;    
+pris001; She fights back!; She fights back!; She fights back!; She fights back!;    
+EVTOPTApris001; Ouch!; Ouch!; Ouch!; Ouch!;    
+pris9002; A guard revels your lecherous secret; A guard revels your lecherous secret; A guard revels your lecherous secret; A guard revels your lecherous secret;
+EVTOPTApris9002; Rats!; Rats!; Rats!; Rats!;    
+opinion_assaulted;Assaulted me!;Assaulted me!;Assaulted me!;Assaulted me!;    
+EVTOPTApris003; What a time!; What a time!; What a time!; What a time!;    
+prist003; You ravish the poor girl; You ravish the poor girl; You ravish the poor girl; You ravish the poor girl;    
+prist002; A Guard Tells!; A Guard Tells!; A Guard Tells!; A Guard Tells!;    
+prist001; She fights back!; She fights back!; She fights back!; She fights back!;    
+pris003; You ravish the poor girl; You ravish the poor girl; You ravish the poor girl; You ravish the poor girl;    
+pris004; She injures you in your attempt!; She injures you in your attempt!; She injures you in your attempt!;    
+EVTOPTApris004; Ouch!; Ouch!; Ouch!; Ouch!;    
+pris005; She maims you in your attempt!; She maims you in your attempt!; She maims you in your attempt!;    
+EVTOPTApris005; Ouch!; Ouch!; Ouch!; Ouch!;    
+pris006; [From.GetTitledFirstName] has come to your cell and assaulted you against your will!; [From.GetTitledFirstName] has come to your cell and assaulted you against your will!; [From.GetTitledFirstName] has come to your cell and assaulted you against your will!; [From.GetTitledFirstName] has come to your cell and assaulted you against your will!;
+EVTOPTApris006; I'll never forgive him for this!; I'll never forgive him for this!; I'll never forgive him for this!; I'll never forgive him for this!;
+take_prisoner_as_wife; Force [Root.GetTitledFirstName] to marry you; Force [Root.GetTitledFirstName] to marry you; Force [Root.GetTitledFirstName] to marry you; Force [Root.GetTitledFirstName] to marry you;
+take_prisoner_as_wife_desc; Force [Root.GetTitledFirstName] to marry you, against her will; Force [Root.GetTitledFirstName] to marry you, against her will; Force [Root.GetTitledFirstName] to marry you, against her will; Force [Root.GetTitledFirstName] to marry you, against her will; 
+opinion_forced_marriage;Forced Marriage;;;;;;;;;;;;;x
+opinion_assaulted_relative;Assaulted Relative;Assaulted Relative;Assaulted Relative;Assaulted Relative;

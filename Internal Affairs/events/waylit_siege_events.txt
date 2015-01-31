@@ -1,0 +1,1374 @@
+#on_siege_won_leader events
+#110009990
+#110009991
+#110009992
+#110009993
+
+#attacker gets imprisonment options if owner of holding is at holding when it falls in siege, unless all family #"hidden"
+
+character_event = {
+
+	id = 110009991
+	desc = "EVTDESCsiegewin01"
+	picture = "GFX_evt_siege"
+	border = GFX_event_normal_frame_war
+
+	is_triggered_only = yes
+
+	trigger = {
+		NOT = { any_liege = { has_landed_title = e_rebels } }
+		FROM = {
+			holder_scope = {
+				capital_holding = { 
+					OR = {
+						title = PREVPREV
+						controller = {
+							NOT = { character = PREVPREV }
+						}						
+					}	
+				}
+				at_location = ROOT 
+				OR = {
+					tier = KING
+					tier = EMPEROR
+					AND = {
+						OR = {
+							is_primary_war_defender = yes
+							is_primary_war_attacker = yes						
+						}
+						ROOT = { 
+							OR = {
+								war_with = PREV
+								any_liege = { war_with = PREVPREV }
+							}
+						}
+					}	
+					any_current_enemy = {
+						OR = {
+							character = ROOT
+							ROOT = { any_liege = { character = PREVPREV } }
+						}
+					}
+					any_courtier = {
+						any_current_enemy = {
+							OR = {
+								character = ROOT
+								ROOT = { any_liege = { character = PREVPREV } }
+							}
+						}
+					}
+				}
+				NOT = { has_character_modifier = modifier_hidden }
+			}			
+		}
+	}
+
+	option = {
+		name = "EVTOPTAsiegewin1"
+		trigger = {
+			liege = {
+				FROM = { 
+					holder_scope = { 
+						OR = {
+							war_with = ROOT 
+							war_with = PREVPREV
+						}	
+					} 
+				}
+			}	
+		} 
+		ai_chance = {
+			factor = 10
+			modifier = {
+				factor = 50  
+				FROM = { holder_scope = { primary_title = { higher_tier_than = COUNT } } }
+			}
+			modifier = {
+				factor = 100  
+				FROM = { holder_scope = { primary_title = { higher_tier_than = DUKE } } }
+			}
+			modifier = {
+				factor = 0.25  
+				FROM = { holder_scope = { primary_title = { lower_tier_than = COUNT } } }
+			}
+			modifier = {
+				factor = 2
+				trait = cruel
+			}
+			modifier = {
+				factor = 2
+				trait = greedy
+			}
+			modifier = {
+				factor = 2
+				trait = envious
+			}
+			modifier = {
+				factor = 10
+				trait = impaler
+			}
+			modifier = {
+				factor = 10
+				trait = wroth
+			}
+			modifier = {
+				factor = 0.25
+				trait = charitable
+			}
+			modifier = {
+				factor = 1.5
+				trait = just
+			}
+		} #ai
+		if = {
+			limit = { NOT = { personality_traits = 5 } }
+			if = {
+				limit = {
+					NOT = { trait = just }
+					NOT = { trait = arbitrary }
+				}		
+				random = {
+					chance = 5
+
+					add_trait = just
+					hidden_tooltip = {
+						character_event = {
+							id = 38267 #Notify
+						}
+					}
+				}
+			}
+			if = {
+				limit = {
+					trait = charitable
+				}		
+				random = {
+					chance = 5
+
+					remove_trait = charitable
+					hidden_tooltip = {
+						character_event = {
+							id = 38321 #Notify
+						}
+					}
+				}
+			}
+		}	
+		FROM = { 
+			holder_scope = {
+				if = {
+					limit = { 
+						#at_location = ROOT
+						NOT = { has_character_modifier = modifier_hidden } 
+						NOT = { character = ROOT }
+					}  
+					set_character_flag = captured_in_battle
+					if = {
+						limit = { ROOT = { is_ruler = yes } }
+						imprison = ROOT 	
+					}
+					if = {
+						limit = { ROOT = { NOT = { is_ruler = yes } } }
+						ROOT = { liege = { character_event = { id = 110009995 } } }
+					}	
+					hidden_tooltip = { character_event = { id = 110009998 } } #Inform
+				}
+				any_courtier = {  #Always imprison direct war enemies
+					limit = {
+						any_current_enemy = {
+							OR = {
+								character = ROOT
+								ROOT = { any_liege = { character = PREVPREV } }
+							}
+						}
+						NOT = { in_command = yes }
+						NOT = { character = ROOT }
+						NOT = { character = PREV }
+						at_location = ROOT
+						NOT = { has_character_modifier = modifier_hidden }
+					}		
+					set_character_flag = captured_in_battle 
+					if = {
+						limit = { ROOT = { is_ruler = yes } }
+						imprison = ROOT 	
+					}
+					hidden_tooltip = { character_event = { id = 110009998 } } #Inform
+				}				
+			}		
+		}
+	}
+		
+	option = {
+		name = "EVTOPTAsiegewin2"
+		trigger = {
+			liege = {
+				FROM = { 
+					holder_scope = { 
+						OR = {
+							war_with = ROOT 
+							war_with = PREVPREV
+						}
+						any_courtier = {
+							OR = {
+								dynasty = PREV
+								any_spouse = { character = PREVPREV }
+								any_current_enemy = {
+									OR = {
+										character = ROOT
+										ROOT = { any_liege = { character = PREVPREV } }
+									}
+								}
+							}	
+							NOT = { in_command = yes }
+							NOT = { character = ROOT }
+							NOT = { character = PREV }
+							at_location = ROOT
+							NOT = { has_character_modifier = modifier_hidden }
+							NOT = { is_child_of = ROOT }	
+							NOT = { father = { is_child_of = ROOT } }
+							NOT = { mother = { is_child_of = ROOT } } 			
+						}
+					} 
+				}
+			}	
+		} #trg
+	
+		ai_chance = {
+			factor = 0.5
+			modifier = {
+				factor = 0.1
+				FROM = { holder_scope = { primary_title = { lower_tier_than = COUNT } } }
+			}
+			modifier = {
+				factor = 40
+				FROM = { holder_scope = { 
+				any_dynasty_member = { primary_title = { higher_tier_than = COUNT } } } }
+			}
+			modifier = {
+				factor = 100
+				FROM = { holder_scope = { 
+					any_dynasty_member = { primary_title = { higher_tier_than = DUKE } } } }
+			}
+			modifier = {
+				factor = 8
+				trait = cruel
+			}
+			modifier = {
+				factor = 8
+				trait = greedy
+			}
+			modifier = {
+				factor = 0
+				trait = kind
+			}
+			modifier = {
+				factor = 20
+				trait = impaler
+			}
+			modifier = {
+				factor = 20
+				trait = wroth
+			}	
+		} #ai
+		if = {
+			limit = { NOT = { personality_traits = 5 } }
+			random = { 
+				chance = 10
+				if = {
+					limit = {
+						NOT = { trait = greedy }
+						NOT = { trait = charitable }
+					}	
+					add_trait = greedy
+					hidden_tooltip = {
+						character_event = {
+							id = 38252 #Notify
+						}
+					}
+				}
+				if = {
+					limit = {
+						NOT = { trait = cruel }
+						NOT = { trait = kind }
+					}	
+					add_trait = cruel
+					hidden_tooltip = {
+						character_event = {
+							id = 38259 #Notify
+						}
+					}
+				}
+				if = {
+					limit = {
+						trait = kind
+					}	
+					remove_trait = kind
+					hidden_tooltip = {
+						character_event = {
+							id = 38309 #Notify
+						}
+					}
+				}	
+			}
+		}	
+		FROM = { 
+			holder_scope = { 
+				if = {
+					limit = { 
+						#at_location = ROOT
+						NOT = { has_character_modifier = modifier_hidden } 
+						NOT = { character = ROOT }
+					}  
+					set_character_flag = captured_in_battle
+					if = {
+						limit = { ROOT = { is_ruler = yes } }
+						imprison = ROOT 	
+					}
+					if = {
+						limit = { ROOT = { NOT = { is_ruler = yes } } }
+						ROOT = { liege = { character_event = { id = 110009995 } } }
+					}	
+					hidden_tooltip = { character_event = { id = 110009998 } } #Inform
+				}
+				any_courtier = { 
+					limit = {
+						dynasty = PREV
+						NOT = { character = ROOT }
+						NOT = { any_liege = { character = ROOT } }
+						has_guardian = yes
+						at_location = ROOT 
+						NOT = { has_character_modifier = modifier_hidden } 
+						guardian = { in_command = no at_location = ROOT NOT = { character = ROOT } }
+					}	
+					guardian = { 
+						set_character_flag = captured_in_battle 
+						if = {
+							limit = { ROOT = { is_ruler = yes } }
+							imprison = ROOT 	
+						}
+						hidden_tooltip = { character_event = { id = 110009998 } } #Inform
+					}
+				}
+				any_courtier = {  
+					limit = {
+						OR = {
+							dynasty = PREV
+							any_spouse = { character = PREVPREV }
+							any_current_enemy = {
+								OR = {
+									character = ROOT
+									ROOT = { any_liege = { character = PREVPREV } }
+								}
+							}
+						}	
+						NOT = { in_command = yes }
+						NOT = { character = ROOT }
+						NOT = { character = PREV }
+						at_location = ROOT
+						NOT = { has_character_modifier = modifier_hidden }
+						NOT = { is_child_of = ROOT }	
+						NOT = { father = { is_child_of = ROOT } }
+						NOT = { mother = { is_child_of = ROOT } } 	
+					}		
+					set_character_flag = captured_in_battle 
+					if = {
+						limit = { ROOT = { is_ruler = yes } }
+						imprison = ROOT 	
+					}
+					hidden_tooltip = { character_event = { id = 110009998 } } #Inform
+				}	
+			}			
+		}
+		if = {
+			limit = { ROOT = { NOT = { is_ruler = yes } } }
+			ROOT = { liege = { character_event = { id = 110009995 } } }
+		}
+	}
+			 
+	option = {
+		name = "EVTOPTAsiegewin3"
+		trigger = {
+			liege = {
+				FROM = { 
+					holder_scope = { 
+						OR = {
+							war_with = ROOT 
+							war_with = PREVPREV
+						}	
+					} 
+				}
+			}	
+		} 
+		ai_chance = {
+			factor = 1
+			modifier = {
+				factor = 10
+				trait = kind
+			}
+			modifier = {
+				factor = 3
+				trait = charitable
+			}
+			modifier = {
+				factor = 3
+				trait = humble
+			}
+			modifier = {
+				factor = 0.5
+				trait = wroth
+			}
+			modifier = {
+				factor = 0.5
+				trait = greedy
+			}
+			modifier = {
+				factor = 0.5
+				trait = cruel
+			}	
+		} #ai
+		if = {
+			limit = { NOT = { personality_traits = 5 } }
+			random = { 
+				chance = 10
+				if = {
+					limit = {
+						NOT = { trait = kind }
+						NOT = { trait = cruel }
+					}	
+					add_trait = kind
+					hidden_tooltip = {
+						character_event = {
+							id = 38268 #Notify
+						}
+					}
+				}
+				if = {
+					limit = {
+						NOT = { trait = just }
+						NOT = { trait = arbitrary }
+					}	
+					add_trait = just
+					hidden_tooltip = {
+						character_event = {
+							id = 38267 #Notify
+						}
+					}
+				}
+				if = {
+					limit = {
+						trait = cruel
+					}	
+					remove_trait = cruel
+					hidden_tooltip = {
+						character_event = {
+							id = 38303 #Notify
+						}
+					}
+				}
+			}
+		}	
+		FROM = { 
+			holder_scope = { 	
+				any_courtier = { 
+					limit = {
+						dynasty = PREV
+						NOT = { character = ROOT }
+						NOT = { any_liege = { character = ROOT } }
+						has_guardian = yes
+						at_location = ROOT 
+						NOT = { has_character_modifier = modifier_hidden } 
+						guardian = { in_command = no at_location = ROOT NOT = { character = ROOT } }
+					}	
+					guardian = { 
+						opinion = {
+							who = ROOT
+							modifier = opinion_relieved
+							months = 12
+						}
+					}
+				}
+				any_courtier = {  
+					limit = {
+						OR = {
+							dynasty = PREV
+							any_spouse = { character = PREVPREV }
+							any_current_enemy = {
+								OR = {
+									character = ROOT
+									ROOT = { any_liege = { character = PREVPREV } }
+								}
+							}
+						}	
+						NOT = { in_command = yes }
+						NOT = { character = ROOT }
+						NOT = { character = PREV }
+						at_location = ROOT
+						NOT = { has_character_modifier = modifier_hidden }
+						NOT = { is_child_of = ROOT }	
+						NOT = { father = { is_child_of = ROOT } }
+						NOT = { mother = { is_child_of = ROOT } } 					
+					}			
+					opinion = {
+						who = ROOT
+						modifier = opinion_relieved
+						months = 12
+					}
+				}
+			}
+		}
+	}
+	
+	option = {
+		name = "EVTOPTAwaylitfriendlycapture"
+		trigger = {
+			NOT = {
+				liege = {
+					FROM = { 
+						holder_scope = { 
+							OR = {
+								war_with = ROOT 
+								war_with = PREVPREV
+							}	
+						} 
+					}
+				}	
+			}	
+		} 
+		ai_chance = {
+			factor = 100
+		}
+		prestige = 1
+		FROM = { 
+			holder_scope = { 
+				any_courtier = { 
+					if = { 
+						limit = { 
+							NOT = { character = ROOT }
+							at_location = ROOT 
+							NOT = { war_with = ROOT }
+						}
+						opinion = {
+							who = ROOT
+							modifier = liberated
+							months = 12
+						}
+					}
+					hidden_tooltip = {
+						if = { 
+							limit = { 
+								at_location = ROOT 
+								NOT = { war_with = ROOT }
+								has_character_modifier = modifier_hidden 
+							} 
+							remove_character_modifier = modifier_hidden
+						}
+					}	
+				}
+			}
+		}	
+	}
+}
+
+	
+#If owner not at location, event for imprisoning their family.  If all hidden, then it should say "Fine lets go"
+character_event = {
+
+	id = 110009992
+	desc = "EVTDESCsiegenoenemy"
+	picture = "GFX_evt_siege"
+	border = GFX_event_normal_frame_war
+
+
+	is_triggered_only = yes
+	
+	trigger = {
+		NOT = { any_liege = { has_landed_title = e_rebels } }
+		FROM = { 
+			holder_scope = {
+				capital_holding = { 
+					OR = {
+						title = PREVPREV
+						controller = {
+							NOT = { character = PREVPREV }
+						}						
+					}	
+				}
+				OR = {
+					tier = KING
+					tier = EMPEROR
+					AND = {
+						OR = {
+							is_primary_war_defender = yes
+							is_primary_war_attacker = yes						
+						}
+						ROOT = { 
+							OR = {
+								war_with = PREV
+								any_liege = { war_with = PREVPREV }
+							}
+						}
+					}
+					any_current_enemy = {
+						OR = {
+							character = ROOT
+							ROOT = { any_liege = { character = PREVPREV } }
+						}
+					}
+					any_courtier = {
+						any_current_enemy = {
+							OR = {
+								character = ROOT
+								ROOT = { any_liege = { character = PREVPREV } }
+							}
+						}
+					}
+				}
+				OR = {
+					NOT = { at_location = ROOT }
+					has_character_modifier = modifier_hidden
+				}
+				 
+			}
+		}
+	}
+		
+	option = {
+		name = "EVTOPTAnoenemy2"
+		trigger = {
+			liege = {
+				FROM = { 
+					holder_scope = { 
+						OR = {
+							war_with = ROOT 
+							war_with = PREVPREV
+						}
+						any_courtier = {
+							OR = {
+								dynasty = PREV
+								any_spouse = { character = PREVPREV }
+								any_current_enemy = {
+									OR = {
+										character = ROOT
+										ROOT = { any_liege = { character = PREVPREV } }
+									}
+								}
+							}	
+							NOT = { in_command = yes }
+							NOT = { character = ROOT }
+							NOT = { character = PREV }
+							at_location = ROOT
+							NOT = { has_character_modifier = modifier_hidden }
+							NOT = { is_child_of = ROOT }	
+							NOT = { father = { is_child_of = ROOT } }
+							NOT = { mother = { is_child_of = ROOT } }							
+						}
+					} 
+				}
+			}	
+		} #tgr
+				
+		ai_chance = {
+			factor = 0.1
+			modifier = {
+				factor = 50
+				FROM = { holder_scope = { 
+					any_dynasty_member = { primary_title = { higher_tier_than = BARON } } } }
+			}			
+			modifier = {
+				factor = 60
+				trait = cruel
+			}
+			modifier = {
+				factor = 50
+				trait = greedy
+			}
+			modifier = {
+				factor = 100
+				trait = impaler
+			}
+			modifier = {
+				factor = 0.25
+				trait = kind
+			}
+			modifier = {
+				factor = 0.25
+				trait = charitable
+			}	
+		} #ai
+		if = {
+			limit = { NOT = { personality_traits = 5 } }
+			random = { 
+				chance = 10
+				if = {
+					limit = {
+						NOT = { trait = greedy }
+						NOT = { trait = charitable }
+					}	
+					add_trait = greedy
+					hidden_tooltip = {
+						character_event = {
+							id = 38252 #Notify
+						}
+					}
+				}
+				if = {
+					limit = {
+						NOT = { trait = cruel }
+						NOT = { trait = kind }
+					}	
+					add_trait = cruel
+					hidden_tooltip = {
+						character_event = {
+							id = 38259 #Notify
+						}
+					}
+				}
+				if = {
+					limit = {
+						trait = kind
+					}	
+					remove_trait = kind
+					hidden_tooltip = {
+						character_event = {
+							id = 38309 #Notify
+						}
+					}
+				}	
+			}
+		}	
+		FROM = { 
+			holder_scope = {
+				any_courtier = { 
+					limit = {
+						dynasty = PREV
+						NOT = { character = ROOT }
+						NOT = { any_liege = { character = ROOT } }
+						has_guardian = yes
+						at_location = ROOT 
+						NOT = { has_character_modifier = modifier_hidden } 
+						guardian = { in_command = no at_location = ROOT NOT = { character = ROOT } }
+					}	
+					guardian = { 
+						set_character_flag = captured_in_battle 
+						if = {
+							limit = { ROOT = { is_ruler = yes } }
+							imprison = ROOT 	
+						}
+						hidden_tooltip = { character_event = { id = 110009998 } } #Inform
+					}
+				}
+				any_courtier = {  
+					limit = {
+						OR = {
+							dynasty = PREV
+							any_spouse = { character = PREVPREV }
+							any_current_enemy = {
+								OR = {
+									character = ROOT
+									ROOT = { any_liege = { character = PREVPREV } }
+								}
+							}
+						}	
+						NOT = { in_command = yes }
+						NOT = { character = ROOT }
+						NOT = { character = PREV }
+						at_location = ROOT
+						NOT = { has_character_modifier = modifier_hidden }
+						NOT = { is_child_of = ROOT }	
+						NOT = { father = { is_child_of = ROOT } }
+						NOT = { mother = { is_child_of = ROOT } } 					
+					}		
+					set_character_flag = captured_in_battle 
+					if = {
+						limit = { ROOT = { is_ruler = yes } }
+						imprison = ROOT 	
+					}
+					hidden_tooltip = { character_event = { id = 110009998 } } #Inform
+				}	
+			}			
+		}
+		if = {
+			limit = { ROOT = { NOT = { is_ruler = yes } } }
+			ROOT = { liege = { character_event = { id = 110009995 } } }
+		}
+	}
+		
+	option = { 
+		name = "EVTOPTAnoenemy1"
+		trigger = {
+			liege = {
+				FROM = { 
+					holder_scope = { 
+						OR = {
+							war_with = ROOT 
+							war_with = PREVPREV
+						}	
+					} 
+				}
+			}	
+		} 		
+		ai_chance = {
+			factor = 1
+			modifier = {
+				factor = 100
+				trait = kind
+			}
+			modifier = {
+				factor = 6
+				trait = just
+			}
+			modifier = {
+				factor = 0.5
+				trait = greedy
+			}
+			modifier = {
+				factor = 0.5
+				trait = cruel
+			}
+			modifier = {
+				factor = 0.5
+				trait = wroth
+			}
+		} #ai
+
+		FROM = { 
+			holder_scope = { 			
+				any_courtier = { 
+					limit = {
+						dynasty = PREV
+						NOT = { character = ROOT }
+						NOT = { any_liege = { character = ROOT } }
+						has_guardian = yes
+						at_location = ROOT 
+						NOT = { has_character_modifier = modifier_hidden } 
+						guardian = { in_command = no at_location = ROOT NOT = { character = ROOT } }
+					}	
+					guardian = { 
+						opinion = {
+							who = ROOT
+							modifier = opinion_relieved
+							months = 12
+						}
+					}
+				}
+				any_courtier = {  
+					limit = {
+						OR = {
+							dynasty = PREV
+							any_spouse = { character = PREVPREV }
+							any_current_enemy = {
+								OR = {
+									character = ROOT
+									ROOT = { any_liege = { character = PREVPREV } }
+								}
+							}
+						}	
+						NOT = { in_command = yes }
+						NOT = { character = ROOT }
+						NOT = { character = PREV }
+						at_location = ROOT
+						NOT = { has_character_modifier = modifier_hidden }
+						NOT = { is_child_of = ROOT }	
+						NOT = { father = { is_child_of = ROOT } }
+						NOT = { mother = { is_child_of = ROOT } } 				
+					}		
+					opinion = {
+						who = ROOT
+						modifier = opinion_relieved
+						months = 12
+					}
+				}
+			}
+		}
+	}	
+	option = {
+		name = "EVTOPTAwaylitfriendlycapture"
+		trigger = {
+			NOT = {
+				liege = {
+					FROM = { 
+						holder_scope = { 
+							OR = {
+								war_with = ROOT 
+								war_with = PREVPREV
+							}	
+						} 
+					}
+				}
+			}	
+		} 
+		ai_chance = {
+			factor = 100
+		}
+		prestige = 1
+		FROM = { 
+			holder_scope = { 
+				any_courtier = { 
+					if = { 
+						limit = { 
+							NOT = { character = ROOT }
+							at_location = ROOT 
+							NOT = { war_with = ROOT }
+						}
+						opinion = {
+							who = ROOT
+							modifier = liberated
+							months = 12
+						}
+					}
+					hidden_tooltip = {
+						if = { 
+							limit = { 
+								NOT = { character = ROOT }
+								at_location = ROOT 
+								NOT = { war_with = ROOT }
+								has_character_modifier = modifier_hidden 
+							} 
+							remove_character_modifier = modifier_hidden
+						}
+					}
+				}
+			}
+		}
+	}
+}
+
+#if dungeons have anybody worth freeing, there are options for that on siege win
+character_event = {
+	id = 110009993
+	desc = "EVTDESCWAYsearchdungeons"
+	picture = "GFX_evt_siege"
+	border = GFX_event_normal_frame_war
+
+	is_triggered_only = yes
+		
+	trigger = { 
+		FROM = {
+			holder_scope = {
+				AND = {
+					war_with = ROOT
+					any_courtier = {
+						prisoner = yes 
+						at_location = ROOT
+					}
+				}
+			}
+		} 					
+	}
+	
+	option = {
+		name = "EVTOPWAYprisonrelease01"
+		trigger = { 
+			FROM = { 
+				holder_scope = { 
+					AND = { 
+						war_with = ROOT 
+						any_courtier = { prisoner = yes } 
+					} 
+				} 
+			} 
+		} 	
+		ai_chance = { 
+			factor = 0.25
+			modifier = {
+				factor = 2
+				trait = kind
+			}
+			modifier = {
+				factor = 2
+				trait = trusting
+			}
+			modifier = {
+				factor = 0.5
+				trait = cruel
+			}
+			modifier = {
+				factor = 2
+				trait = charitable
+			}
+			modifier = {
+				factor = 0.5
+				trait = wroth
+			}
+			modifier = {
+				factor = 0.5
+				trait = cynical
+			}
+			modifier = {
+				factor = 0.5
+				trait = paranoid
+			}   
+		} #ai
+		if = {
+			limit = { NOT = { personality_traits = 5 } }
+			random = { 
+				chance = 10
+				if = {
+					limit = {
+						NOT = { trait = kind }
+						NOT = { trait = cruel }
+					}	
+					add_trait = kind
+					hidden_tooltip = {
+						character_event = {
+							id = 38268 #Notify
+						}
+					}
+				}
+			}
+		}	
+		FROM = { 
+			holder_scope = {
+				any_courtier = {	
+					limit = { 
+						at_location = ROOT
+						prisoner = yes 
+					}
+					prisoner = no
+					clr_character_flag = captured_in_battle
+					clr_character_flag = lost_trial_by_combat
+					hidden_tooltip = { character_event = { id = 110009999 } } #Inform
+				}
+			}
+		}
+	}
+		
+	option = {
+		name = "EVTOPWAYprisonrelease02"
+		trigger = { 
+			FROM = { 
+				holder_scope = { 
+					AND = { 
+						war_with = ROOT 
+						any_courtier = { war_with = PREV } 
+					} 
+				} 
+			} 
+		} 	
+		ai_chance = { 
+			factor = 1.5 
+			modifier = {
+				factor = 2
+				trait = kind
+			}
+			modifier = {
+				factor = 2
+				trait = trusting
+			}
+			modifier = {
+				factor = 2
+				trait = just
+			}
+			modifier = {
+				factor = 0.5
+				trait = cruel
+			}
+			modifier = {
+				factor = 0.5
+				trait = wroth
+			}
+			modifier = {
+				factor = 0.5
+				trait = cynical
+			}
+			modifier = {
+				factor = 0.5
+				trait = paranoid
+			} 
+		} #ai
+		random = { 
+			chance = 20
+			if = {
+				limit = {
+					NOT = { trait = just }
+					NOT = { trait = arbitrary }
+				}	
+				add_trait = just
+				hidden_tooltip = {
+					character_event = {
+						id = 38267 #Notify
+					}
+				}
+			}
+		}
+		FROM = { 
+			holder_scope = {
+				any_courtier = {	
+					limit = { 
+						prisoner = yes 
+						war_with = PREV
+					}
+					prisoner = no
+					clr_character_flag = captured_in_battle
+					clr_character_flag = lost_trial_by_combat
+					hidden_tooltip = { character_event = { id = 110009999 } } #Inform
+				}
+			}
+		}
+	}
+	
+	option = {
+		name = "EVTOPWAYprisonrelease03"
+		 
+		trigger = { 
+			FROM = { 
+				holder_scope = { 
+					war_with = ROOT 
+					any_courtier = {
+						prisoner = yes
+					}		
+				}
+			} #frm
+			ROOT = { 
+				any_dynasty_member = {
+					AND = {
+						at_location = ROOT
+						prisoner = yes 
+					} #and
+				}
+			} #root	  
+		} #trigger	
+		ai_chance = { 
+			factor = 0.75
+			modifier = {
+				factor = 0.9
+				trait = kind
+			}
+			modifier = {
+				factor = 0.9
+				trait = trusting
+			}
+			modifier = {
+				factor = 0.75
+				trait = just
+			}
+			modifier = {
+				factor = 1.5
+				trait = cruel
+			}
+			modifier = {
+				factor = 1.5
+				trait = wroth
+			}
+			modifier = {
+				factor = 2
+				trait = cynical
+			}
+			modifier = {
+				factor = 2
+				trait = paranoid
+			}
+		} #ai
+		random = { 
+			chance = 10
+			if = {
+				limit = {
+					NOT = { trait = trusting }
+					NOT = { trait = paranoid }
+				}	
+				add_trait = paranoid
+				hidden_tooltip = {
+					character_event = {
+						id = 38275 #Notify
+					}
+				}
+			}
+		}
+		ROOT = { 	
+			any_dynasty_member = {
+				if = {
+					limit = { 
+						prisoner = yes 
+						at_location = ROOT
+					}
+					prisoner = no
+					clr_character_flag = captured_in_battle
+					clr_character_flag = lost_trial_by_combat
+					hidden_tooltip = { character_event = { id = 110009999 } } #Inform
+				}	
+				if = {
+					limit = { 
+						guardian = {
+							prisoner = yes 
+							at_location = ROOT
+						}	
+					}
+					guardian = {
+						prisoner = no
+						clr_character_flag = captured_in_battle
+						clr_character_flag = lost_trial_by_combat
+						hidden_tooltip = { character_event = { id = 110009999 } } #Inform
+					}	
+				}	
+			}
+			any_spouse = {
+				if = {
+					limit = { 
+						prisoner = yes 
+						at_location = ROOT
+					}
+					prisoner = no
+					clr_character_flag = captured_in_battle
+					clr_character_flag = lost_trial_by_combat
+					hidden_tooltip = { character_event = { id = 110009999 } } #Inform
+				}	
+			}
+		}
+	}
+
+	option = {
+		name = "EVTOPWAYprisonrelease04"
+			
+		trigger = { 
+			FROM = { 
+				holder_scope = { 
+					AND = { 
+						war_with = ROOT 
+						any_courtier = { prisoner = yes }
+					} 
+				 } 
+			} 
+		} 	
+		ai_chance = { 
+			factor = 0.01 
+			modifier = {
+				factor = 0.1
+				trait = kind
+			}
+			modifier = {
+				factor = 0.1
+				trait = just
+			}
+			modifier = {
+				factor = 10
+				trait = ambitious
+			}
+			modifier = {
+				factor = 10
+				trait = cruel
+			}
+			modifier = {
+				factor = 10
+				trait = wroth
+			}
+			modifier = {
+				factor = 10
+				trait = cynical
+			}
+			modifier = {
+				factor = 10
+				trait = paranoid
+			} 
+		}
+		random = { 
+			chance = 20
+			if = {
+				limit = {
+					NOT = { trait = cruel }
+					NOT = { trait = kind }
+				}	
+				add_trait = cruel
+				hidden_tooltip = {
+					character_event = {
+						id = 38259 #Notify
+					}
+				}
+			}
+		}
+		random = { 
+			chance = 10
+			if = {
+				limit = {
+					NOT = { trait = zealous }
+					NOT = { trait = cynical }
+				}	
+				add_trait = cynical
+				hidden_tooltip = {
+					character_event = {
+						id = 38258 #Notify
+					}
+				}
+			}
+		}
+		FROM = { 
+			holder_scope = {
+				any_courtier = {	
+					limit = { 
+						at_location = ROOT
+						prisoner = yes 
+					}
+					opinion = {
+						who = ROOT
+						modifier = left_to_rot
+						months = 60
+					}
+				}
+			}
+		}
+	}
+}
+#Liege takes prsioners
+character_event = {
+	id = 110009995
+	desc = "EVTDESC110009995"
+	picture = "GFX_evt_siege"
+	border = GFX_event_normal_frame_war
+
+	is_triggered_only = yes
+		
+	option = {
+		name = "EVTOP110009995"
+		FROM = {
+			FROM = { 
+				holder_scope = {
+					if = {
+						limit = { 
+							NOT = { character = ROOT }
+							NOT = { has_character_modifier = modifier_hidden }
+							prisoner = no
+							has_character_flag = captured_in_battle						
+						}  
+						imprison = ROOT 		
+					}
+					any_courtier = {
+						limit = { 
+							NOT = { liege = { character = ROOT } }
+							NOT = { character = ROOT }
+							NOT = { has_character_modifier = modifier_hidden }
+							prisoner = no
+							NOT = { character = PREV }
+							has_character_flag = captured_in_battle						
+						}
+						imprison = ROOT 
+					}					
+				}		
+			}
+		}	
+	}
+}	
+#Inform taken prisoner
+character_event = {
+	id = 110009998
+	desc = "EVTDESC110009998"
+	picture = "GFX_evt_siege"
+	border = GFX_event_normal_frame_war
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = "EVTOP110009998"
+	}
+}
+#Inform released
+character_event = {
+	id = 110009999
+	desc = "EVTDESC110009999"
+	picture = "GFX_evt_siege"
+	border = GFX_event_normal_frame_war
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = "EVTOP110009999"
+	}
+}	

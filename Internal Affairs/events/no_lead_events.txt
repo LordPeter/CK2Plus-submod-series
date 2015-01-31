@@ -1,0 +1,261 @@
+namespace = no_lead
+
+character_event = {
+	id = no_lead.100
+	desc = EVTDESC_no_lead_100
+	border = GFX_event_letter_frame_intrigue
+	picture = GFX_evt_leader
+
+	
+		
+	trigger = {
+			has_character_flag = does_not_want_to_lead 
+			not = { has_character_flag = no_lead_asked_liege }
+	}
+	
+	mean_time_to_happen = {
+		years = 1
+		modifier = {
+			factor = 5.0
+			trait = brilliant_strategist
+		}
+		modifier = {
+			factor = 3.0
+			trait = skilled_tactician
+		}
+		modifier = {
+			factor = 2.0
+			trait = tough_soldier
+		}
+		modifier = {
+			factor = 1.0
+			trait = misguided_warrior
+		}
+		modifier = {
+			factor = 10.0
+			not = { prestige = 100 }
+		}
+		modifier = {
+			factor = 5.0
+			not = { prestige = 200 }
+		}
+		modifier = {
+			factor = 0.25
+			not = { martial = 5 }
+		}
+		modifier = {
+			factor = 0.5
+			not = { martial = 10 }
+		}
+	}
+		
+		option = {
+		name = EVTOPT_no_lead_100A
+		set_character_flag = no_lead_asked_liege
+		liege = { letter_event = { id = no_lead.200 days = 5 } }
+		
+		
+	}
+}
+		
+letter_event = {
+	id = no_lead.200
+	desc = EVTDESC_no_lead_200
+	border = GFX_event_letter_frame_intrigue
+	is_triggered_only = yes
+	
+	
+	option = {
+	#Nonsense! You Shall Lead
+	name = EVTOPT_no_lead_200A
+	ai_chance = {
+			factor = 50
+			modifier = {
+				factor = 0.50
+				trait = charitable
+			}
+			modifier = {
+				factor = 2.0
+				is_primary_war_defender = yes
+			}
+			modifier = {
+				factor = 5.0
+				NOT = {
+					opinion = {
+						who = FROM
+						value = 5
+					}
+				}
+			}
+			modifier = {
+				factor = 0.50
+				not = {
+					opinion = {
+					who = FROM
+					value = 50
+					}
+				}
+			}
+			modifier = {
+				factor = 5.0
+				not = {	any_war = {	war_score = 50 }
+				}
+			}
+		}
+		
+		FROM = { 
+				letter_event = { id = no_lead.400 days = 5 } 
+				opinion = { who = FROM modifier = opinion_refused_to_lead }
+				}
+	}
+	
+	
+	option = {
+	#I don't need you anyway You shall NOT lead
+	name = EVTOPT_no_lead_200B
+		ai_chance = {
+			factor = 50
+			modifier = {
+				factor = 0.50
+				trait = charitable
+			}
+			
+			modifier = {
+				factor = 5.0
+				NOT = {
+					opinion = {
+						who = FROM
+						value = 5
+					}
+				}
+			}
+			modifier = {
+				factor = 0.50
+				opinion = {
+					who = FROM
+					value = 50
+				}
+			}
+			modifier = {
+				factor = 0.50
+				any_war = {
+						war_score = 50
+						}
+			}
+		}
+	
+		
+		FROM = { 
+				letter_event = { id = no_lead.300 days = 5 }
+				opinion = { who = FROM modifier = opinion_refused_to_lead }
+				}
+	}
+	
+	option = {
+	name = EVTOPT_no_lead_200C
+	trigger = {
+		or = {
+			trait = lunatic
+			trait = cruel
+			trait = possessed
+			}
+		}
+	#I shall imprison you for treason!
+	
+		ai_chance = {
+			factor = 25
+			modifier = {
+				factor = 0.005
+				trait = charitable
+			}
+			modifier = {
+				factor = 2.0
+				trait = ambitious
+			}
+			modifier = {
+				factor = 2.0
+				trait = greedy
+			}
+			
+			modifier = {
+				factor = 0.005
+				trait = kind
+			}	
+			
+			modifier = {
+				factor = 0.5
+					opinion = {
+					who = FROM
+					value = 50
+					}
+				}
+						
+			modifier = {
+				factor = 5.0
+				not = {	any_war = {	war_score = -50 }
+				}
+			}
+		}
+	
+		
+		FROM = { 
+				letter_event = { id = no_lead.500 days = 5 }
+				opinion = { who = FROM modifier = opinion_refused_to_lead }
+				}
+	}
+}
+
+
+#I don't need you anyway You shall NOT lead
+letter_event = {
+	id = no_lead.300
+	desc = EVTDESC_no_lead_300
+	border = GFX_event_letter_frame_intrigue
+	is_triggered_only = yes
+
+	option = {
+	name = EVTOPT_no_lead_300A
+	in_command = no
+	opinion = { who = FROM modifier = opinion_grateful years = 1 }
+	clr_character_flag = does_not_want_to_lead 
+	clr_character_flag = no_lead_asked_liege
+		
+	}
+}
+
+#Please help us lead
+letter_event = {
+	id = no_lead.400
+	desc = EVTDESC_no_lead_400
+	border = GFX_event_letter_frame_intrigue
+	is_triggered_only = yes
+
+	option = {
+	name = EVTOPT_no_lead_400A
+	in_command = no
+	opinion = { who = FROM modifier = opinion_angry years = 1 }
+	clr_character_flag = does_not_want_to_lead 
+	clr_character_flag = no_lead_asked_liege
+	add_character_modifier = {
+				name = liege_said_no_timer
+				duration = 365
+				hidden = yes
+			}	
+	}
+}
+
+#Ive been imprisoned!
+letter_event = {
+	id = no_lead.500
+	desc = EVTDESC_no_lead_500
+	border = GFX_event_letter_frame_intrigue
+	is_triggered_only = yes
+	
+	option = {
+	name = EVTOPT_no_lead_500A
+	opinion = { who = FROM modifier = opinion_charge_traitor years = 1 }
+	clr_character_flag = does_not_want_to_lead 
+	clr_character_flag = no_lead_asked_liege
+	PREV = { imprison = ROOT }	
+	}
+}

@@ -1,0 +1,155 @@
+obj_no_lead = {
+	type = character
+
+	allow = {
+		independent = no
+		is_ruler = yes
+		is_adult = yes
+		is_landed = yes
+		in_command = yes
+		NOT = { has_character_modifier = liege_said_no_timer }
+		liege = { war = yes }
+	}
+	chance = {
+		factor = 25
+			
+		 modifier = {
+			 factor = 0.5
+			 trait = brave
+		 }
+		 modifier = {
+			 factor = 3.0
+			 war = no
+		 }
+		modifier = {
+			 factor = 2.0
+			 in_command = yes
+		 }
+		
+		 modifier = {
+			 factor = 1.5
+			 trait = slothful
+		 }
+		
+		 modifier = {
+			 factor = 3.0
+			 is_councillor = yes
+		 }
+		
+		 modifier = {
+			 factor = 2.0
+			 trait = misguided_warrior
+		 }
+		 
+		 modifier = {
+			 factor = 0.25
+			 OR = {
+				 trait = skilled_tactician
+				 trait = brilliant_strategist
+			 }
+		 }
+		
+		 modifier = {
+			 factor = 0.05
+			 mercenary = yes
+		}
+		modifier = {
+			 factor = 0.05
+			 is_marshal = yes
+		}
+		 modifier = {
+			 factor = 1.25
+			 trait = ambitious
+		 }
+		 modifier = {
+			 factor = 0.50
+			 not = { prestige = 100 }
+		 }
+		
+		 modifier = {
+			 factor = 1.75
+			 trait = deceitful
+		 }
+		 modifier = {
+			factor = 2.50
+			trait = ill
+		 }
+		 modifier = {
+			factor = 2.50
+			trait = wounded
+		 }
+		 modifier = {
+			factor = 25.00
+			trait = maimed
+		 }
+		 modifier = {
+			factor = 25.00
+			trait = infirm
+		 }
+		 modifier = {
+			factor = 25.00
+			trait = incapable
+		 }
+		 modifier = {
+			 factor = 2.50
+			 trait = craven
+		 }
+		 modifier = {
+				factor = 50.00
+				not = { opinion = { who = LIEGE value = -99 } }
+		 }
+		 modifier = {
+			 factor = 25.00
+			 not = { opinion = { who = LIEGE value = -50 } }
+		 }
+		 modifier = {
+			 factor = 5.00
+			 not = { opinion = { who = LIEGE value = 0 } }
+		 }
+		
+		
+	}
+	creation_effect = {
+	set_character_flag = does_not_want_to_lead
+				
+				
+			}	
+	
+	success = {
+		in_command = no
+		
+	 }
+	abort = {
+		OR = {
+			has_character_modifier = liege_said_no_timer
+			is_ruler = no
+			independent = yes
+			NOT = { higher_tier_than = baron }
+			trait = incapable
+			trait = infirm
+			AND = {
+				ai = yes
+				NOT = { has_character_modifier = ai_objective_timer }
+			}
+		}
+	}
+	abort_effect = {
+		if = {
+			limit = { ai = yes }
+			remove_character_modifier = ai_objective_timer
+		}
+		clr_character_flag = does_not_want_to_lead
+		clr_character_flag = no_lead_asked_liege
+	}
+	effect = {
+		hidden_tooltip = {
+			if = {
+				limit = { ai = yes }
+				remove_character_modifier = ai_objective_timer
+			}
+			
+		}
+		clr_character_flag = does_not_want_to_lead
+		prestige = 50
+	}
+}

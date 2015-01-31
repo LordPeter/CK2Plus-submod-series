@@ -1,0 +1,41 @@
+title_bodyguard = {
+	dignity = 0.1
+	grant_limit = 5
+	
+	show_as_title = no
+	realm_in_name = no
+	
+	monthly_salary = 0.500
+	monthly_prestige = 0.100
+	opinion_effect = 5
+	
+	allow = {
+		is_ruler = no
+		is_adult = yes
+		OR = {
+			is_councillor  = no
+			has_job_title = job_marshal
+		}	
+		FROM = { 
+			higher_tier_than = BARON
+		} 
+		NOT = { trait = incapable }
+		NOT = { trait = crippled }
+		NOT = { trait = infirm }
+		OR = {
+			trait = trained_warrior
+			trait = skilled_warrior
+			trait = master_warrior
+			FROM = { ai = no }
+		}
+	}
+	
+	gain_effect = {
+		add_trait = bodyguard 
+	}
+	lose_effect = {
+		remove_trait = bodyguard
+	}
+
+	message = no
+}

@@ -1,0 +1,741 @@
+namespace = traitf
+
+#Purchase a bird
+character_event = {
+	id = traitf.101
+	desc = "traitf101"
+	picture = "GFX_evt_falconer"
+	is_triggered_only = yes 
+	immediate = { set_character_flag = shopping_for_falcon }
+	option = {
+	name = "KeepLooking"
+	
+	     
+	}
+		
+		
+}
+#FindOne
+character_event = {
+	id = traitf.102
+	desc = "traitf102"
+trigger = {
+		age = 16
+		is_ruler = yes
+		has_character_flag = shopping_for_falcon
+		trait = falconer 
+		not = { has_character_flag = failed_to_find_falcon }
+		}
+		immediate = { clr_character_flag = shopping_for_falcon  }
+		mean_time_to_happen = { 
+		days = 5 
+		
+		modifier = {
+			factor = 1
+			has_character_flag = shopping_for_falcon
+			}
+		modifier = {
+			factor = 4
+			trait = greedy
+			}
+		modifier = {
+			factor = 4
+			trait = patient
+			}
+		modifier = {
+			factor = 8
+			or = { 
+				trait = slow
+				trait = imbecile
+				trait = inbred
+			}
+		}
+		}
+		option = {
+			name = "DESCbird1"
+				treasury = -50
+				add_character_modifier = { name = bird1 duration = 1095 }
+				clr_character_flag = shopping_for_falcon
+				
+		}
+		option = {
+			name = "DESCbird2"
+				trigger = {
+					realm_size = 25
+					treasury = 100
+					}
+				treasury = -100
+				add_character_modifier = { name = bird2 duration = 1095 }
+				clr_character_flag = shopping_for_falcon
+				
+		}	
+		option = {
+			name = "DESCbird3"
+				trigger = {
+					realm_size = 35
+					treasury = 150
+					}
+				treasury = -150
+				add_character_modifier = { name = bird3 duration = 1095 }
+				clr_character_flag = shopping_for_falcon
+				
+		}
+		option = {
+			name = "DESCbird4"
+				trigger = {
+					realm_size = 55
+					treasury = 250
+					}
+				treasury = -250
+				add_character_modifier = { name = bird4 duration = 1095 }
+				clr_character_flag = shopping_for_falcon
+				
+		}
+	}
+	
+#birdgetssick
+character_event = {
+	id = traitf.103
+	desc = "traitf103"
+trigger = {
+		age = 16
+		is_ruler = yes
+		trait = falconer 
+		or = { has_character_modifier = bird1
+		has_character_modifier = bird2
+		has_character_modifier = bird3
+		has_character_modifier = bird4
+		has_character_modifier = bird5
+		}
+		not = { has_character_flag = shopping_for_falcon }
+		}
+		mean_time_to_happen = { 
+		days = 1085
+		
+		modifier = {
+			not = { treasury = 0	}
+			factor = .25
+			}
+		modifier = {	trait = greedy	
+			factor = .85
+			}
+		modifier = {	trait = stressed	
+			factor = .5
+			}
+		modifier = {	trait = ill	
+			factor = .5
+			}
+		modifier = {	war = yes
+			factor = .5
+			}
+		modifier = {	prisoner = yes
+			factor = .25
+			}
+		modifier = {	trait = wounded
+			factor = .5
+			}
+		modifier = {	trait = maimed
+			factor = .25
+			}
+		modifier = {	trait = wroth	
+			factor = .75
+			}
+		modifier = {	trait = kind 
+			factor = 1.5
+			}
+		modifier = {
+			has_character_modifier = bird1
+			factor = .5
+			}
+		modifier = {
+			has_character_modifier = bird2
+			factor = .75
+			}
+		modifier = {
+			has_character_modifier = bird3
+			factor = 1
+			}	
+		modifier = {
+			has_character_modifier = bird4
+			factor = 2
+			}
+		modifier = {
+			has_character_modifier = bird5
+			factor = 5
+			}
+		}
+	option = {
+		name = "birdgetssick"
+		trigger = { has_character_modifier = bird1 }
+		remove_character_modifier = bird1
+		}
+	option = {
+		name = "birdgetssick"
+		trigger = { has_character_modifier = bird2 }
+		remove_character_modifier = bird2
+		}
+	option = {
+		name = "birdgetssick"
+		trigger = { has_character_modifier = bird3 }
+		remove_character_modifier = bird3
+		}
+	option = {
+		name = "birdgetssick"
+		trigger = { has_character_modifier = bird4 }
+		remove_character_modifier = bird4
+		}
+		option = {
+		desc = "birdgetssick"
+		trigger = { has_character_modifier = bird5 }
+		remove_character_modifier = bird5
+		}
+	}
+
+#BirdTraining
+character_event = {
+	id = traitf.201
+	desc = "traitf201"
+	picture = "GFX_evt_falconer"
+	is_triggered_only = yes 
+	immediate = {
+		clr_character_flag = training_falcon
+		set_character_flag = done_training_falcon
+		}
+		
+		
+	option = {
+		name = "begintraining"
+	    trigger = { has_character_modifier = bird1
+			or = {
+				trait = diligent
+				trait = genius
+				trait = patient
+				trait = quick
+				trait = kind
+				}
+		}
+		treasury = -50
+		prestige = 50
+		hidden_tooltip = {
+		random_list = {
+		5 = { trait = stressed
+			   character_event = { id = traitf.301 days = 3 } }
+		50 = { character_event = { id = traitf.202 days = 3 } }
+		10 = { character_event = { id = traitf.303 days = 3 } }
+		10 = { character_event = { id = traitf.304 days = 3 } }
+		10 = { character_event = { id = traitf.305 days = 3 } }
+		}
+		}
+		}
+		option = {
+		name = "begintraining"
+	    trigger = { has_character_modifier = bird1
+				not = { trait = diligent }
+				not = { trait = genius }
+				not = { trait = patient }
+				not = { trait = quick }
+				not = { trait = kind }
+				
+			}
+		treasury = -50
+		prestige = 50
+		hidden_tooltip = {	
+		random_list = {
+		25 = { trait = stressed
+			   character_event = { id = traitf.301 days = 3 } }
+		20 = { character_event = { id = traitf.202 days = 3 } }
+		20 = { character_event = { id = traitf.303 days = 3 } }
+		20 = { character_event = { id = traitf.304 days = 3 } }
+		20 = { character_event = { id = traitf.305 days = 3 } }
+		}
+		}
+		}
+		option = {
+		name = "begintraining"
+	    trigger = { has_character_modifier = bird2
+				or = {
+				trait = diligent
+				trait = genius
+				trait = patient
+				trait = quick
+				trait = kind
+				}		
+				}
+		treasury = -100
+		prestige = 100
+		hidden_tooltip = {
+		random_list = {
+		5 = { trait = stressed
+			   character_event = { id = traitf.301 days = 3 } }
+		50 = { character_event = { id = traitf.202 days = 3 } }
+		10 = { character_event = { id = traitf.303 days = 3 } }
+		10 = { character_event = { id = traitf.304 days = 3 } }
+		10 = { character_event = { id = traitf.305 days = 3 } }
+		}
+		}
+		}
+		option = {
+		name = "begintraining"
+	    trigger = { has_character_modifier = bird2
+				
+				not = { trait = diligent }
+				not = { trait = genius }
+				not = { trait = patient }
+				not = { trait = quick }
+				not = { trait = kind }
+				
+			}
+		treasury = -100
+		prestige = 100
+		hidden_tooltip = {
+		random_list = {
+		15 = { trait = stressed
+			   character_event = { id = traitf.301 days = 3 } }
+		50 = { character_event = { id = traitf.202 days = 3 } }
+		50 = { character_event = { id = traitf.303 days = 3 } }
+		25 = { character_event = { id = traitf.304 days = 3 } }
+		20 = { character_event = { id = traitf.305 days = 3 } }
+		}
+		}
+		}
+		
+		option = {
+		name = "begintraining"
+	    trigger = { has_character_modifier = bird3
+				or = {
+				trait = diligent
+				trait = genius
+				trait = patient
+				trait = quick
+				trait = kind
+				}		
+				}
+		treasury = -150
+		prestige = 150
+		hidden_tooltip = {
+			random_list = {
+		5 = { trait = stressed
+			   character_event = { id = traitf.301 days = 3 } }
+		50 = { character_event = { id = traitf.202 days = 3 } }
+		10 = { character_event = { id = traitf.303 days = 3 } }
+		10 = { character_event = { id = traitf.304 days = 3 } }
+		10 = { character_event = { id = traitf.305 days = 3 } }
+		}
+		}
+		}
+		option = {
+		name = "begintraining"
+	    trigger = { has_character_modifier = bird3
+				
+				not = { trait = diligent }
+				not = { trait = genius }
+				not = { trait = patient }
+				not = { trait = quick }
+				not = { trait = kind }
+				
+			}
+			treasury = -150
+			prestige = 150
+		hidden_tooltip = {
+		random_list = {
+		5 = { trait = stressed
+			   character_event = { id = traitf.301 days = 3 } }
+		50 = { character_event = { id = traitf.202 days = 3 } }
+		20 = { character_event = { id = traitf.303 days = 3 } }
+		20 = { character_event = { id = traitf.304 days = 3 } }
+		25 = { character_event = { id = traitf.305 days = 3 } }
+		}
+		}
+		}
+		option = {
+		name = "begintraining"
+	    trigger = { has_character_modifier = bird4
+				or = {
+				trait = diligent
+				trait = genius
+				trait = patient
+				trait = quick
+				trait = kind
+				}
+				}
+		treasury = -200
+		prestige = 200
+		hidden_tooltip = {
+			random_list = {
+		5 = { trait = stressed
+			   character_event = { id = traitf.301 days = 3 } }
+		50 = { character_event = { id = traitf.202 days = 3 } }
+		10 = { character_event = { id = traitf.303 days = 3 } }
+		10 = { character_event = { id = traitf.304 days = 3 } }
+		10 = { character_event = { id = traitf.305 days = 3 } }
+		}
+		}
+		}
+		option = {
+		name = "begintraining"
+	    trigger = { has_character_modifier = bird4
+				
+				not = { trait = diligent }
+				not = { trait = genius }
+				not = { trait = patient }
+				not = { trait = quick }
+				not = { trait = kind }
+				
+			}
+		treasury = -200
+		prestige = 200
+		random_list = {
+		hidden_tooltip = {
+		5 = { trait = stressed
+			   character_event = { id = traitf.301 days = 3 } }
+		50 = { character_event = { id = traitf.202 days = 3 } }
+		10 = { character_event = { id = traitf.303 days = 3 } }
+		10 = { character_event = { id = traitf.304 days = 3 } }
+		10 = { character_event = { id = traitf.305 days = 3 } }
+		}
+		}
+		}
+		option = {
+		name = "NVM"
+		}
+		
+	}
+#Flys away
+character_event = {
+	id = traitf.301
+	desc = "traitf301"
+	picture = "GFX_evt_falconer"
+	is_triggered_only = yes 
+		immediate = {
+		
+		clr_character_flag = training_falcon
+		clr_character_flag = hunting_falcon
+		set_character_flag = done_training_falcon
+		
+		}
+		option = {
+		name = "birdfliesoff"
+		trigger = { has_character_modifier = bird1 }
+		remove_character_modifier = bird1
+		}
+	option = {
+		name = "birdfliesoff"
+		trigger = { has_character_modifier = bird2 }
+		remove_character_modifier = bird2
+		}
+	option = {
+		name = "birdfliesoff"
+		trigger = { has_character_modifier = bird3 }
+		remove_character_modifier = bird3
+		}
+	option = {
+		name = "birdfliesoff"
+		trigger = { has_character_modifier = bird4 }
+		remove_character_modifier = bird4
+		}
+		
+		
+}
+
+#Training Success
+character_event = {
+	id = traitf.202
+	desc = "traitf202"
+	picture = "GFX_evt_falconer"
+	is_triggered_only = yes 
+		
+		option = {
+		name = "birdprogresses"
+		trigger = { has_character_modifier = bird1 }
+		remove_character_modifier = bird1
+		add_character_modifier = { name = bird2 duration = 1095 }
+		prestige = 25
+		}
+	option = {
+		name = "birdprogresses"
+		trigger = { has_character_modifier = bird2 }
+		remove_character_modifier = bird2
+		add_character_modifier = { name = bird3 duration = 1095 }
+		prestige = 50
+		}
+	option = {
+		name = "birdprogresses"
+		trigger = { has_character_modifier = bird3 }
+		remove_character_modifier = bird3
+		add_character_modifier = { name = bird4 duration = 1095 }
+		prestige = 75
+		}
+	option = {
+		name = "birdprogressesmax"
+		trigger = { has_character_modifier = bird4 }
+		remove_character_modifier = bird4
+		add_character_modifier = { name = bird5 duration = 1825 }
+		prestige = 100
+		}
+		
+		
+}
+
+#Training Failure
+character_event = {
+	id = traitf.303
+	desc = "traitf303"
+	picture = "GFX_evt_falconer"
+	is_triggered_only = yes 
+		
+		option = {
+		name = "falconbirdfails"
+		trigger = { has_character_modifier = bird1 }
+		prestige = -50
+		}
+	option = {
+		name = "falconbirdfails"
+		trigger = { has_character_modifier = bird2 }
+		remove_character_modifier = bird2
+		add_character_modifier = { name = bird1 duration = 1095 }
+		prestige = -50
+		}
+	option = {
+		name = "falconbirdfails"
+		trigger = { has_character_modifier = bird3 }
+		remove_character_modifier = bird3
+		add_character_modifier = { name = bird2 duration = 1095 }
+		prestige = -50
+		}
+	option = {
+		name = "falconbirdfails"
+		trigger = { has_character_modifier = bird4 }
+		remove_character_modifier = bird4
+		add_character_modifier = { name = bird3 duration = 1095 }
+		prestige = -50
+		}
+}
+#Training Waste
+character_event = {
+	id = traitf.304
+	desc = "traitf304"
+	picture = "GFX_evt_falconer"
+	is_triggered_only = yes 
+		
+		option = {
+		name = "falconbirdfails"
+		prestige = -25
+		}
+}
+#ShinyGift
+character_event = {
+	id = traitf.305
+	desc = "traitf305"
+	picture = "GFX_evt_falconer"
+	is_triggered_only = yes 
+		
+		option = {
+		name = "birdmedium"
+		prestige = -25
+		treasury = 100
+		}
+}
+#HuntStart
+character_event = {
+	id = traitf.501
+	desc = "traitf501"
+	picture = "GFX_evt_falconer"
+	is_triggered_only = yes 
+	immediate = {
+		
+		clr_character_flag = hunting_falcon
+		set_character_flag = done_hunting_falcon
+		
+		}
+	option = {
+		name = "falconhuntbegins"
+		character_event = { id = traitf.502 days = 3 }
+	}
+}
+	
+#TheHunt
+
+character_event = {
+	id = traitf.502
+	desc = "traitf502"
+	picture = "GFX_evt_falconer"
+	is_triggered_only = yes 
+	immediate = {
+		
+		clr_character_flag = hunting_falcon
+		set_character_flag = done_hunting_falcon
+		
+		}
+	option = {
+		name = "letsseefalcon"
+	    trigger = { has_character_flag = bird1 }
+		hidden_tooltip = {
+		random_list = {
+		15 = { trait = stressed
+			   character_event = { id = traitf.301 days = 3 } }
+		50 = { character_event = { id = traitf.601 days = 3 } }
+		25 = { character_event = { id = traitf.602 days = 3 } }
+		10 = { character_event = { id = traitf.603 days = 3 } }
+		0 = { character_event = { id = traitf.604 days = 3 } }
+		}
+		}
+		}
+		option = {
+		name = "letsseefalcon"
+	    trigger = { has_character_flag = bird2 }
+		hidden_tooltip = {
+		random_list = {
+		15 = { trait = stressed
+			   character_event = { id = traitf.301 days = 3 } }
+		75 = { character_event = { id = traitf.601 days = 3 } }
+		50 = { character_event = { id = traitf.602 days = 3 } }
+		25 = { character_event = { id = traitf.603 days = 3 } }
+		5 = { character_event = { id = traitf.604 days = 3 } }
+		}
+		}
+		}
+		option = {
+		name = "letsseefalcon"
+	    trigger = { has_character_flag = bird3 }
+		hidden_tooltip = {
+		random_list = {
+		15 = { trait = stressed
+			   character_event = { id = traitf.301 days = 3 } }
+		80 = { character_event = { id = traitf.601 days = 3 } }
+		75 = { character_event = { id = traitf.602 days = 3 } }
+		50 = { character_event = { id = traitf.603 days = 3 } }
+		10 = { character_event = { id = traitf.604 days = 3 } }
+		}
+		}
+		}
+		option = {
+		name = "letsseefalcon"
+	    trigger = { has_character_flag = bird4 }
+		hidden_tooltip = {
+		random_list = {
+		10 = { trait = stressed
+			   character_event = { id = traitf.301 days = 3 } }
+		25 = { character_event = { id = traitf.601 days = 3 } }
+		75 = { character_event = { id = traitf.602 days = 3 } }
+		50 = { character_event = { id = traitf.603 days = 3 } }
+		25 = { character_event = { id = traitf.604 days = 3 } }
+		}
+		}
+		}
+		option = {
+		name = "letsseefalcon"
+	    trigger = { has_character_flag = bird5 }
+		hidden_tooltip = {
+		random_list = {
+		0 = { trait = stressed
+			   character_event = { id = traitf.301 days = 3 } }
+		25 = { character_event = { id = traitf.601 days = 3 } }
+		75 = { character_event = { id = traitf.602 days = 3 } }
+		50 = { character_event = { id = traitf.603 days = 3 } }
+		50 = { character_event = { id = traitf.604 days = 3 } }
+		}
+		}
+		}
+	}
+	
+#LowYield
+character_event = {
+	id = traitf.601
+	desc = "traitf601"
+	picture = "GFX_evt_falconer"
+	is_triggered_only = yes 
+		
+	option = {
+		name = "falconlowyield"
+		prestige = 50
+		}
+	}
+	#MedYield
+character_event = {
+	id = traitf.602
+	desc = "traitf602"
+	picture = "GFX_evt_falconer"
+	is_triggered_only = yes 
+		
+	option = {
+		name = "falconmedyield"
+		prestige = 100
+		treasury = 50
+		}
+	}
+#LargeYield
+character_event = {
+	id = traitf.603
+	desc = "traitf603"
+	picture = "GFX_evt_falconer"
+	is_triggered_only = yes 
+		
+	option = {
+		name = "falconlargeyield"
+		prestige = 150
+		treasury = 100
+		health = 1
+		}
+	}
+#HugeYield
+character_event = {
+	id = traitf.604
+	desc = "traitf604"
+	picture = "GFX_evt_falconer"
+	is_triggered_only = yes 
+		
+	option = {
+		name = "falconhugeyield"
+		prestige = 250
+		treasury = 200
+		health = 2
+		}
+	}
+#TESTITALL
+character_event = {
+	id = traitf.999
+	desc = "traitf604"
+	picture = "GFX_evt_falconer"
+	is_triggered_only = yes 
+		
+	option = {
+		name = "falconhugeyield"
+		add_trait = falconer
+		}
+	}
+	
+	
+ #Clear Flag
+ character_event = {
+	id = traitf.996
+	desc = ""
+	picture = "GFX_evt_hunt"
+	hide_window = yes
+		trigger = {
+		age = 16
+		is_ruler = yes
+		had_character_flag = { flag = done_training_falcon days = 60 }
+		}
+	immediate = {
+	clr_character_flag = done_training_falcon
+	}	
+	
+	}
+ 
+ #Clear Flag
+ character_event = {
+	id = traitf.997
+	desc = ""
+	picture = "GFX_evt_hunt"
+	hide_window = yes
+		trigger = {
+		age = 16
+		is_ruler = yes
+		had_character_flag = { flag = done_hunting_falcon days = 180 }
+		}
+	immediate = {
+	clr_character_flag = done_hunting_falcon
+	}	
+	
+	}
+ 

@@ -1,0 +1,236 @@
+decisions = {
+
+indoctrinate_prisoners_decision = {
+		potential = {
+			is_adult = yes
+			NOT = {
+				trait = incapable
+			}
+			any_courtier = {
+				prisoner = yes
+				age = 6
+				is_adult = no
+				host = {
+					character = ROOT
+				}
+				NOT = {
+					has_character_flag = refused_wardship
+				}
+				OR = {
+					has_guardian = no
+					guardian = {
+						NOT = {
+							character = ROOT
+						}
+					}
+				}
+			}
+		}
+		allow = {
+			NOT = {
+				any_ward = {
+					count = 2
+				}
+			}
+		}
+		effect = {		
+		
+			any_courtier = {
+				limit ={				
+				prisoner = yes
+				age = 6
+				is_adult = no
+				host = {
+					character = ROOT
+				}
+				NOT = {
+					has_character_flag = refused_wardship
+				}
+				OR = {
+					has_guardian = no
+					guardian = {
+						NOT = {
+							character = ROOT
+							}
+						}
+					}
+				}
+				letter_event = { id = prisoners.10 }	
+			}
+			
+		}
+		revoke_allowed = {
+			always = no
+		}
+		ai_will_do = {
+			factor = 0
+		}
+	}
+
+}
+
+vassal_decisions = {
+
+# Shows up for every courtier/vassal, the ruler is in the from scope
+
+	seduce_prisoner = {
+		is_high_prio = yes
+		from_potential = {
+			is_ruler = yes
+			age = 16
+			is_female = no
+			in_command = no
+			prisoner = no
+			NOT = { trait = incapable }
+			NOT = { trait = maimed }
+			NOT = { trait = homosexual }
+			NOT = { trait = kind }
+			NOT = { trait = just }
+			NOT = { trait = eunuch }
+			NOT = { has_character_modifier = prisoner_assaulted }
+		}
+		potential = {
+				prisoner = yes
+				is_female = yes
+				age = 16
+				host = { character = FROM }
+				NOT = { has_character_flag = pris_assaulted }
+				NOT = { trait = incapable }
+				NOT = { trait = maimed }
+		}
+		allow = {
+			prisoner = yes
+		}
+		effect = {
+		if = { 
+				limit = {
+					is_female = yes
+					is_pregnant = no
+					NOT = { trait = incapable }
+					NOT = { trait = maimed }
+					NOT = { fertility = 0.30 }
+						OR = { FROM = { NOT = { fertility = 0.30 } } }
+					}
+				hidden_tooltip = {
+					random_list = {
+						10 = { 
+							impregnate = FROM 
+						}
+						70 = { health = 0.01 }
+					}
+				}
+			}
+			#High Fertility
+			if = { 
+				limit = {
+					is_female = yes
+					is_pregnant = no
+					NOT = { trait = incapable }
+					NOT = { trait = maimed }
+					fertility = 0.31
+						AND = { FROM = { fertility = 0.31 } }
+					}
+				hidden_tooltip = {
+					random_list = {
+						60 = { 
+							impregnate = FROM 
+						}
+						40 = { health = 0.01 }
+					}
+				}
+			}
+			FROM = { character_event = { id = pris.003 } }
+			character_event = { id = pris.006 }
+								opinion = {
+								modifier = opinion_assaulted
+								who = FROM
+								years = 2
+							}
+							}
+					
+					
+		revoke_allowed = {
+			always = no
+		}
+		ai_will_do = {
+			
+			modifier = {
+				factor = 0.4 #Reduce the chance AI will do
+			}
+			modifier = {
+				factor = 0
+				trait = chaste
+			}
+			modifier = {
+				factor = 1.5
+				trait = lustful
+			}
+			modifier = {
+				factor = .4
+				trait = shy
+			}
+			modifier = {
+				factor = 0.5
+				trait = slothful
+			}
+				modifier = {
+				factor = 0.8
+				trait = diligent
+			}
+			modifier = {
+				factor = 0
+				trait = kind
+			}
+			
+		
+	}
+}
+
+
+
+take_prisoner_as_wife = {
+		is_high_prio = yes
+		from_potential = {
+			is_ruler = yes
+			is_married = no
+			is_female = no
+			prisoner = no
+			age = 16
+			NOT = { trait = kind }
+			NOT = { trait = just }
+			
+		}
+	
+		potential = {
+			prisoner = yes
+			host = { character = FROM }
+			is_female = yes
+			age = 16
+			NOT = { trait = incapable }
+			NOT = { any_consort = { character = FROM } }
+			NOT = { any_lover = { character = FROM } }
+			NOT = { any_spouse = { character = FROM } }
+		}
+		allow = {
+			prisoner = yes
+		}
+		effect = {
+			add_spouse = FROM
+			opinion = {
+				who = FROM
+				modifier = opinion_forced_marriage
+			}
+			prisoner = no
+		}
+		revoke_allowed = {
+			always = no
+		}
+		ai_will_do = {
+			factor = 0
+		}
+	}
+	
+ 
+ 
+ 
+ }
