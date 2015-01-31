@@ -1,0 +1,4 @@
+[HIP 2014-11-19]
+Enabled HIP modules:
+VIET Traits (v1.8.2 - 2014-11-19)
+VIET Events (v1.8.2 - 2014-11-19)

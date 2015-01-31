@@ -1,0 +1,69 @@
+##########################################
+#
+# Introducing VIET Assets
+#
+##########################################
+
+namespace = cybrxkhan
+
+narrative_event = {
+	id = cybrxkhan.8
+	title = "cybrxkhan.8.name"
+	desc = "cybrxkhan.8.desc"
+	major = yes
+	hide_new = yes
+	hide_from = yes
+	is_triggered_only = yes
+	
+	picture = "GFX_evt_tuscan_country"
+
+	trigger = {
+		always = no
+	}
+
+	
+	immediate = {
+		#set_global_flag = VIET_Core_On
+	}
+	
+	option = {
+		name = "cybrxkhan.8.a"
+		set_global_flag = VIET_Assets_On
+		#hidden_tooltip = {
+		#	character_event = { id = cybrxkhan.7 days = 1 } #Install checks
+		#}
+	}
+}
+
+
+# Patch Version Check
+narrative_event = {
+	id = cybrxkhan.7
+	title = cybrxkhan.7.name
+	desc = cybrxkhan.7.desc
+	picture = GFX_evt_moorish_decor
+	
+	trigger = {
+		ai = no
+		NOT = { has_global_flag = VIET_Patch_151 }
+		always = no
+	}
+
+	mean_time_to_happen = {
+		days = 1
+	}
+
+	option = {
+		name = "cybrxkhan.7.a"
+		set_global_flag = VIET_Patch_151
+	}	
+	option = {
+		name = "cybrxkhan.7.b"
+		set_global_flag = VIET_Patch_151
+	}		
+	option = {
+		name = "cybrxkhan.7.c"
+		set_global_flag = VIET_Patch_151
+	}	
+	
+}
